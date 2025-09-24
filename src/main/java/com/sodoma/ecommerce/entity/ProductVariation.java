@@ -32,7 +32,7 @@ public abstract class ProductVariation {
 	private BigDecimal price;
 	private String sku;
 	
-	@OneToMany(mappedBy = "variation")
+	@OneToMany(mappedBy = "productVariation")
 	private List<ProductImage> images;
 	
 
