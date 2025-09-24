@@ -1,7 +1,6 @@
 package com.sodoma.ecommerce.entity;
 
 import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
