@@ -1,41 +1,46 @@
 package com.sodoma.ecommerce.entity;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Entity
 @Data
-public class Product {
+@Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(
+		use = JsonTypeInfo.Id.NAME,
+		include = JsonTypeInfo.As.PROPERTY,
+		property = "type")
+@JsonSubTypes({
+	@JsonSubTypes.Type(value = Album.class, name = "album")
+	
+})
+@Table(name = "products")
+public abstract class Product {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@NotBlank
+	@Column(nullable = false)
 	private String name;
 	private String description;
 	
-	@NotNull
-	@DecimalMin("0.0")
-	@Column(precision = 10, scale = 2)
-	private BigDecimal price;
-	
-	@Min(0)
-	private int stockQuantity;
-	private String category;
 	private boolean active;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
