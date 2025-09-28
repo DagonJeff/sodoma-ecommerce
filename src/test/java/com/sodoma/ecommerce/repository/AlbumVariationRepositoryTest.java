@@ -4,7 +4,6 @@ package com.sodoma.ecommerce.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,7 @@ class AlbumVariationRepositoryTest {
         album.setName("Akashica");
         album.setTitle("Akashica Deluxe");
         album.setReleaseYear(2022);
-        album.setLabel(List.of("Independente"));
+        album.addLabel("Altera Pars");
         album = albumRepository.save(album);
 
         // Criar variação (Vinil)

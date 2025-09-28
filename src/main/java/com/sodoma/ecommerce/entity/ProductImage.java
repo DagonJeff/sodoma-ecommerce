@@ -8,23 +8,26 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.AccessLevel;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Data
+
 @Entity
+@Getter
+@NoArgsConstructor
 public class ProductImage {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Setter(AccessLevel.NONE)
 	private Long Id;
+	
+	@Setter
 	private String path;
 	
-//	@Setter(AccessLevel.NONE)
 	private String relatedSku;
 	
+	@Setter
 	@ManyToOne
 	@JoinColumn(name = "variation_id")
 	@JsonBackReference

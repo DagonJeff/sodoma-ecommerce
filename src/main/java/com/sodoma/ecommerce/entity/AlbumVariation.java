@@ -6,13 +6,16 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class AlbumVariation extends ProductVariation<Album>{
 	
 	@Enumerated(EnumType.STRING)
@@ -51,4 +54,8 @@ public class AlbumVariation extends ProductVariation<Album>{
 			this.code = code;
 		}	
 	}
+	
+//	public static void main(String[] args) {
+//		AlbumVariation a = new AlbumVariation();
+//	}
 }

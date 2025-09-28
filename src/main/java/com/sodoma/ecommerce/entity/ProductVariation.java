@@ -20,48 +20,63 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PostPersist;
-import jakarta.persistence.PostUpdate;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
-import lombok.AccessLevel;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Data
+@Getter
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class ProductVariation <T extends Product>{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Setter(AccessLevel.NONE)
-	private Long Id;
+	@EqualsAndHashCode.Include
+	private Long id;
 	
+	@Setter
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	@JsonBackReference
 	private T product;
 	
+	@Setter
 	@Min(0)
 	private int stock;
 	
+	@Setter
 	@DecimalMin("0.0")
 	@Column(precision = 10, scale = 2, nullable = false)
 	private BigDecimal price;
 	
-	@Setter(AccessLevel.NONE)
 	@Column(nullable = false, unique = true)
 	private String sku;
 	
 	@PostPersist
-	@PostUpdate
 	public void ensureSku() {
-		this.sku = buildSku();
+		if(this.sku == null)
+			this.sku = buildSku();
 	}
 	
-	@OneToMany(mappedBy = "productVariation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	
+	@OneToMany(mappedBy = "productVariation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonManagedReference
 	private List<ProductImage> images = new ArrayList<>();
+	
+	public void addImages(ProductImage image) {
+		images.add(image);
+		image.setProductVariation(this);
+	}
+	
+	public void removeImage(ProductImage image) {
+		images.remove(image);
+		image.setProductVariation(null);
+	}
 	
 	
 	public String getDisplayName() {
