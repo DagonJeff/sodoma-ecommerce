@@ -15,10 +15,12 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonTypeInfo(
 		use = JsonTypeInfo.Id.NAME,
@@ -33,14 +35,18 @@ public abstract class Product {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Setter(AccessLevel.NONE)
 	private Long id;
 	
 	@NotBlank
 	@Column(nullable = false)
+	@Setter
 	private String name;
+	
+	@Setter
 	private String description;
 	
-	private boolean active;
+	private boolean active = true;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	
