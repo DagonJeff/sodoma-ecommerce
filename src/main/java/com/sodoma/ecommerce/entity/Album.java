@@ -30,7 +30,6 @@ public class Album extends Product{
 	private String title;
 	
 	
-	//=======peruntar sobre==============//
 	@ElementCollection
 	@CollectionTable(name = "album_labels", joinColumns = @JoinColumn(name = "album_id"))
 	@Column(name = "label")

@@ -2,16 +2,11 @@ package com.sodoma.ecommerce.dto;
 
 import java.math.BigDecimal;
 
-import lombok.Data;
-
-@Data
-public class ProductDTO {
-	
-	private Long id;
-	private String name;
-	private String description;
-	private BigDecimal price;
-	private String category;
-	private boolean active;
-
-}
+public record ProductDTO (
+		Long id,
+		String name,
+		String description,
+		BigDecimal price,
+		String category,
+		boolean active
+	 ) {}
