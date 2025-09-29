@@ -19,7 +19,7 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.PostPersist;
+import jakarta.persistence.PrePersist;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import lombok.EqualsAndHashCode;
@@ -57,7 +57,7 @@ public abstract class ProductVariation <T extends Product>{
 	@Column(nullable = false, unique = true)
 	private String sku;
 	
-	@PostPersist
+	@PrePersist
 	public void ensureSku() {
 		if(this.sku == null)
 			this.sku = buildSku();

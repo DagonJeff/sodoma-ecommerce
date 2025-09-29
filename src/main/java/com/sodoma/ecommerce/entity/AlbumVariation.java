@@ -32,7 +32,7 @@ public class AlbumVariation extends ProductVariation<Album>{
 	@Override
 	protected String buildSku() {
 		
-		return SkuGenerator.generate("ALB", getId(), format.code, getProduct().getName(), getProduct().getTitle());
+		return SkuGenerator.generate("ALB", format.getCode(), getProduct().getName(), getProduct().getTitle());
 	}	
 	
 //=================Enum======================================//

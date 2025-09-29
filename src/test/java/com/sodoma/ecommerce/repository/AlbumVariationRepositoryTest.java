@@ -41,7 +41,7 @@ class AlbumVariationRepositoryTest {
         variation.setPrice(new BigDecimal("120.00"));
         variation.setStock(50);
 
-        variation.ensureSku();
+     //   variation.ensureSku();
         variation = variationRepository.save(variation);
 
         // Garantir que DisplayName veio certo
