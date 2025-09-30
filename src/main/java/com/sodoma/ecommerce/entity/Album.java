@@ -3,16 +3,11 @@ package com.sodoma.ecommerce.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -38,19 +33,15 @@ public class Album extends Product{
 	@Setter
 	private int releaseYear;
 	
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	@JsonManagedReference
-	private List<AlbumVariation> variations = new ArrayList<>();
-	
 	
 	public void addVariation(AlbumVariation variation) {
 	//	Para add uma vários variations, o dto recebe um parametro arraylist
 	//	a iterção do array list e invocar esse método tartar isso no service
-		variations.add(variation);
+		getVariations().add(variation);
 		variation.setProduct(this);
 	}
 	public void removeVariation(AlbumVariation variation) {
-		variations.remove(variation);
+		getVariations().remove(variation);
 		variation.setProduct(null);
 	}
 	
