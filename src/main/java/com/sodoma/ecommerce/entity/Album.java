@@ -3,6 +3,8 @@ package com.sodoma.ecommerce.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sodoma.ecommerce.enums.ProductType;
+
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -11,19 +13,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.validation.constraints.NotBlank;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class Album extends Product{
-	
+
 	@NotBlank
 	@Setter
 	private String title;
-	
 	
 	@ElementCollection
 	@CollectionTable(name = "album_labels", joinColumns = @JoinColumn(name = "album_id"))
@@ -33,10 +32,13 @@ public class Album extends Product{
 	@Setter
 	private int releaseYear;
 	
+	public Album() {
+		super(ProductType.ALBUM);
+	}	
 	
 	public void addVariation(AlbumVariation variation) {
 	//	Para add uma vários variations, o dto recebe um parametro arraylist
-	//	a iterção do array list e invocar esse método tartar isso no service
+	//	a iterção do array list e invocar esse método tratar isso no service
 		getVariations().add(variation);
 		variation.setProduct(this);
 	}

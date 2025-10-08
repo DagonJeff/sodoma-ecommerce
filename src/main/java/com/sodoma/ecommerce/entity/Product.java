@@ -7,10 +7,13 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.sodoma.ecommerce.enums.ProductType;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,12 +27,10 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
-@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonTypeInfo(
@@ -53,8 +54,9 @@ public abstract class Product {
 	@Setter
 	private String name;
 	
-	@Setter
-	private String description;
+	@Column(updatable = false, nullable = false)
+	@Enumerated(EnumType.STRING)
+	private ProductType type;
 	
 	private boolean active = true;
 	private LocalDateTime createdAt;
@@ -64,6 +66,10 @@ public abstract class Product {
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonManagedReference
 	private List<ProductVariation<?>> variations = new ArrayList<>();
+	
+	protected Product (ProductType type) {
+		this.type = type;
+	}
 	
 	@PrePersist
 	public void prePersist() {

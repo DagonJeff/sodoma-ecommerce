@@ -1,6 +1,7 @@
 package com.sodoma.ecommerce.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.sodoma.ecommerce.enums.FormatAlbum;
 import com.sodoma.ecommerce.util.SkuGenerator;
 
 import jakarta.persistence.Column;
@@ -28,13 +29,13 @@ public class AlbumVariation extends ProductVariation<Album>{
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private Format format;
+	private FormatAlbum format;
 	
 	
 	@Override
 	protected String buildDisplayName() {
 		
-		return format.getDisplayName()+" "+getProduct().getName();
+		return format.getName()+" "+getProduct().getName();
 	}
 	
 	@Override
@@ -54,28 +55,6 @@ public class AlbumVariation extends ProductVariation<Album>{
 		this.product = product;
 	}
 	
-	
-//=================Enum======================================//
-	
-	public enum Format{
-		CD("CD", "CD"),
-		VINYL("Vinil", "VIN"),
-		CASSETE("Cassete", "CAS"),
-		BOX("Box", "BOX");
-		
-		@Getter
-		private final String displayName;
-		
-		@Getter
-		private final String code;
-
-		Format(String displayname, String code) {
-			this.displayName = displayname;
-			this.code = code;
-		}	
-	}
-
-
 	
 //	public static void main(String[] args) {
 //		AlbumVariation a = new AlbumVariation();

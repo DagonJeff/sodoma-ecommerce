@@ -1,4 +1,4 @@
-package com.sodoma.ecommerce.dto;
+package com.sodoma.ecommerce.dto.product;
 
 import java.math.BigDecimal;
 

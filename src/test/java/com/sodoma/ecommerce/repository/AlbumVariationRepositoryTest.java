@@ -12,7 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.sodoma.ecommerce.entity.Album;
 import com.sodoma.ecommerce.entity.AlbumVariation;
-import com.sodoma.ecommerce.entity.AlbumVariation.Format;
+import com.sodoma.ecommerce.enums.FormatAlbum;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -37,7 +37,7 @@ class AlbumVariationRepositoryTest {
         // Criar variação (Vinil)
         AlbumVariation variation = new AlbumVariation();
         variation.setProduct(album);
-        variation.setFormat(Format.VINYL);
+        variation.setFormat(FormatAlbum.VINYL);
         variation.setPrice(new BigDecimal("120.00"));
         variation.setStock(50);
 
